@@ -32,9 +32,9 @@ post.post("/posts/create", async (req, res) => {
     image: req.body.image,
     description: req.body.description,
     author: req.body.author,
-  }) 
+  });
   try {
-    const post = await newPost.save()
+    const post = await newPost.save();
 
     res.status(201).send({
       statusCode: 201,

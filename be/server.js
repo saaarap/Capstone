@@ -3,17 +3,16 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const postsRoute = require("./routes/posts");
 const usersRoute = require("./routes/author");
+const commentsRoute = require("./routes/comment");
 
 const PORT = 4040;
 const app = express();
-
 
 app.use(express.json());
 //ROUTES
 app.use("/", postsRoute);
 app.use("/", usersRoute);
-
-
+app.use("/", commentsRoute);
 
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,

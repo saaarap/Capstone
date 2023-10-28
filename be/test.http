@@ -57,3 +57,35 @@ Content-Type: application/json
 ####
 
 DELETE  http://localhost:4040/users/del/653d0c560fd00e53858efc48
+
+
+
+
+####
+GET http://localhost:4040/comment
+
+
+
+####
+POST  http://localhost:4040/comment/create
+Content-Type: application/json
+
+{
+    "comments":"ciao"
+}
+
+
+
+####
+PATCH  http://localhost:4040/comment/update/653d273d3a556696cd07fa4f
+Content-Type: application/json
+
+{
+    "comments":"ciao con modifiche"
+}
+
+
+
+
+####
+DELETE http://localhost:4040/comment/delete/653d273d3a556696cd07fa4f
