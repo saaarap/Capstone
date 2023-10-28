@@ -1,0 +1,59 @@
+####
+GET http://localhost:4040/posts
+
+
+
+
+
+####
+POST http://localhost:4040/posts/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "image": "img.jpg",
+    "description": "questo è il secondo post",
+    "author":"653d0f08ac5fc08f17d0e93d"
+}
+
+
+
+
+
+####
+DELETE  http://localhost:4040/posts/delete/653d025b8c2d9e605d5ec8e9
+
+
+
+####
+GET http://localhost:4040/users
+
+
+
+
+####
+POST  http://localhost:4040/users/add
+Content-Type: application/json
+
+{
+    "userName":"betta1997",
+    "email":"betta.1997@hotmail.it",
+    "password":"ciaociao"
+}
+
+
+
+####
+PATCH http://localhost:4040/users/up/653d0c560fd00e53858efc48
+Content-Type: application/json
+
+{
+    "userName":"sara porcarelli",
+    "email":"sarap.1998@hotmail.it",
+    "password":"ciaociao"
+}
+
+
+
+####
+
+DELETE  http://localhost:4040/users/del/653d0c560fd00e53858efc48
