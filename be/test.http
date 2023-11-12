@@ -1,5 +1,5 @@
 ####
-GET http://localhost:4040/posts
+GET http://localhost:4040/users/profile/:userId
 
 
 
@@ -11,12 +11,15 @@ Content-Type: application/json
 
 {
     "image": "img.jpg",
+    "title":"ciao",
     "description": "questo è il secondo post",
     "author":"653d0f08ac5fc08f17d0e93d"
 }
 
 
 
+####
+POST http://localhost:4040/users/profileData
 
 
 ####
@@ -36,20 +39,20 @@ Content-Type: application/json
 
 {
     "userName":"betta1997",
-    "email":"betta.1997@hotmail.it",
-    "password":"ciaociao"
+    "email":"ciao@1998.it",
+    "password":"porcarelli"
 }
 
 
 
 ####
-PATCH http://localhost:4040/users/up/653d0c560fd00e53858efc48
+PATCH http://localhost:4040/posts/update/6547ce10576adbc9c426a6e0
 Content-Type: application/json
 
 {
-    "userName":"sara porcarelli",
-    "email":"sarap.1998@hotmail.it",
-    "password":"ciaociao"
+
+    "content":"Ristorante il prato! è il mio!"
+
 }
 
 
@@ -62,8 +65,19 @@ DELETE  http://localhost:4040/users/del/653d0c560fd00e53858efc48
 
 
 ####
-GET http://localhost:4040/comment
+GET http://localhost:4040/comment/6547ce10576adbc9c426a6e0
 
+
+
+
+####
+POST http://localhost:4040/comment/create/6547cf6b576adbc9c426a711
+Content-Type: application/json
+
+
+{
+    "comments":"ciao cccccccccc"
+}
 
 
 ####
@@ -71,7 +85,7 @@ POST  http://localhost:4040/comment/create
 Content-Type: application/json
 
 {
-    "comments":"ciao"
+    "comments":"commento per vedere se funziona"
 }
 
 
@@ -89,3 +103,21 @@ Content-Type: application/json
 
 ####
 DELETE http://localhost:4040/comment/delete/653d273d3a556696cd07fa4f
+
+
+
+
+####
+GET http://localhost:4040/users/profile/:userId
+
+
+####
+
+PATCH http://localhost:4040/posts/update/6547ce10576adbc9c426a6e0
+Content-Type: application/json
+
+{
+
+    "content":"Ristorante il prato! è il mio!"
+
+}
