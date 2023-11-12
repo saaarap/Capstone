@@ -4,7 +4,25 @@ const commentModel = require("../models/commentmodel");
 
 comment.get("/comment", async (req, res) => {
   try {
-    const comments = await commentModel.find();
+    const comment = await commentModel.find();
+    res.status(200).send({
+      statusCode: 200,
+      comment,
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Errore interno del server",
+      error,
+    });
+  }
+});
+
+comment.get("/comment/:postId", async (req, res) => {
+  const postId = req.params.postId;
+  try {
+    const comments = await commentModel.find({ postId: postId });
+
     res.status(200).send({
       statusCode: 200,
       comments,
@@ -17,16 +35,20 @@ comment.get("/comment", async (req, res) => {
   }
 });
 
-comment.post("/comment/create", async (req, res) => {
+comment.post("/comment/create/:postId", async (req, res) => {
+const { comments } = req.body;
+  const postId = req.params.postId;
   const newComment = new commentModel({
-    comments: req.body.comments,
+    comments: comments,
+postId: postId,
   });
+
   try {
     const comment = await newComment.save();
 
     res.status(201).send({
       statusCode: 201,
-      message: "Comment save succesfully",
+      message: "Commento salvato con successo",
       payload: comment,
     });
   } catch (error) {

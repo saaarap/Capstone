@@ -65,13 +65,13 @@ DELETE  http://localhost:4040/users/del/653d0c560fd00e53858efc48
 
 
 ####
-GET http://localhost:4040/comment/6547ce10576adbc9c426a6e0
+GET http://localhost:4040/comment/6547cefb576adbc9c426a700
 
 
 
 
 ####
-POST http://localhost:4040/comment/create/6547cf6b576adbc9c426a711
+POST http://localhost:4040/comment/create/6547cefb576adbc9c426a700
 Content-Type: application/json
 
 

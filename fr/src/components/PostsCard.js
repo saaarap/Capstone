@@ -23,7 +23,7 @@ const PostCard = (props) => {
 
   const getComments = async (postId) => {
     try {
-      const response = await client.get(`/comment/${postId}`);
+      const response = await client.get(`http://localhost:4040/comment/${postId}`);
       
       setComments(response.comments);
     } catch (error) {
@@ -42,7 +42,7 @@ const PostCard = (props) => {
 
       console.log(loggedInUser);
 
-      const response = await client.post(`/comment/create/${postId}`, {
+      const response = await client.post(`http://localhost:4040/comment/create/${postId}`, {
         comments: newComment,
         authorComment: loggedInUser.id,
         authorCommentUsername: loggedInUser.userName,
