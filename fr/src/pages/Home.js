@@ -79,7 +79,7 @@ const Home = () => {
               author={post.author?.userName}
               authorAvatar={post.author?.avatar}
               onDelete={handleDeletePost}
-              onUpdate={() => getPosts(currentPage)} 
+              onUpdate={() => getPosts(currentPage)}
               loggedInUser={loggedInUser}
             />
           </div>

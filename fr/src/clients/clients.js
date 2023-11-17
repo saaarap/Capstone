@@ -28,9 +28,6 @@ class AxiosClient {
     const response = await this.axiosInstance.patch(url, config);
     return response.data;
   }
-  
-  
-
 }
 
 export default AxiosClient;

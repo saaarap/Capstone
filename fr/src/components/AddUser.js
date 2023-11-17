@@ -6,7 +6,11 @@ const client = new AxiosClient();
 
 const AddUser = ({ close }) => {
   const [file, setFile] = useState(null);
-  const [formData, setFormData] = useState({ userName: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
 
   const onChangeSetFile = (e) => {
     setFile(e.target.files[0]);
@@ -60,7 +64,7 @@ const AddUser = ({ close }) => {
         if (response.ok) {
           const data = await response.json();
           console.log("users added:", data);
-          close(false); 
+          close(false);
           window.location.href = "http://localhost:3000/login";
         } else {
           throw new Error("Failed to add post");
@@ -77,7 +81,7 @@ const AddUser = ({ close }) => {
     <div className="h-screen w-screen fixed top-1/2 flex items-center left-1/2 backdrop-blur-lg transform -translate-y-1/2 -translate-x-1/2 z-30">
       <div className="fixed z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-zinc-100 shadow-xl w-fit min-w-[500px] h-fit p-4 rounded-xl hover:scale-110 duration-1000">
         <h1 className="font-bold text-4xl mb-4 text-orange-700 text-center">
-          Unisciti a Cucina Compartida! 
+          Unisciti a Cucina Compartida!
         </h1>
         <div className="w-full h-fit p-4 rounded-lg flex justify-center items-center">
           <form

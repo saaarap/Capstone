@@ -23,8 +23,10 @@ const PostCard = (props) => {
 
   const getComments = async (postId) => {
     try {
-      const response = await client.get(`http://localhost:4040/comment/${postId}`);
-      
+      const response = await client.get(
+        `http://localhost:4040/comment/${postId}`
+      );
+
       setComments(response.comments);
     } catch (error) {
       console.error(error);
@@ -40,20 +42,22 @@ const PostCard = (props) => {
         return;
       }
 
-      console.log(loggedInUser);
-
-      const response = await client.post(`http://localhost:4040/comment/create/${postId}`, {
-        comments: newComment,
-        authorComment: loggedInUser.id,
-        authorCommentUsername: loggedInUser.userName,
-        authorCommentAvatar: loggedInUser.avatar,
-      });
+      const response = await client.post(
+        `http://localhost:4040/comment/create/${postId}`,
+        {
+          comments: newComment,
+          authorId: loggedInUser.id,
+          authorCommentUsername: loggedInUser.userName,
+          authorCommentAvatar: loggedInUser.avatar,
+        }
+      );
 
       console.log(response);
 
       if (response.status === 201) {
         setNewComment("");
-        getComments(postId);
+        setComments((prevComments) => [response.payload, ...prevComments]);
+        window.location.href = "http://localhost:3000/home";
       }
     } catch (error) {
       console.error(error);
@@ -174,9 +178,9 @@ const PostCard = (props) => {
           <div key={comment._id} className="flex items-center mb-4">
             <div className="flex items-center">
               <Avatar
-                img={comment.authorCommentAvatar}
+                img={comment.authorId.avatar}
                 rounded
-                alt={`${comment.authorCommentUsername}'s Avatar`}
+                alt={`${comment.authorId.userName}'s Avatar`}
               />
               <p className="ml-2">{comment.comments}</p>
             </div>
@@ -201,7 +205,6 @@ const PostCard = (props) => {
           </div>
         ))}
       </div>
-
 
       <div>
         <Textarea

@@ -5,8 +5,8 @@ import { isAuth } from "../middlewares/ProtectedRoutes";
 
 const useSession = () => {
   const session = isAuth();
-  const decodedSession = session ? jwtDecode(session) : null; // Rimuovi le parentesi graffe
-  
+  const decodedSession = session ? jwtDecode(session) : null;
+
   const navigate = useNavigate();
 
   const checkTokenExpirationTime = () => {
@@ -17,20 +17,20 @@ const useSession = () => {
 
       if (expirationDate < currentDate) {
         localStorage.clear();
-        navigate('/', { replace: true });
+        navigate("/", { replace: true });
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (!session) {
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     } else {
-      checkTokenExpirationTime(); // Sposta questa chiamata qui
+      checkTokenExpirationTime();
     }
   }, [navigate, session]);
 
   return decodedSession;
-}
+};
 
 export default useSession;

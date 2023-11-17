@@ -15,10 +15,10 @@ const PostsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "userModel",
     },
-comments: {
+    comments: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "commentModel",
-    }
+    },
   },
   { timestamps: true, strict: true }
 );

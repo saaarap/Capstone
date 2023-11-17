@@ -6,7 +6,7 @@ const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 const passport = require("passport");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 cloudinary.config({
@@ -85,7 +85,6 @@ user.get("/users", async (req, res) => {
   }
 });
 
-
 user.post("/users/add", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -115,20 +114,24 @@ user.post("/users/add", async (req, res) => {
 user.patch("/users/up/:userId", async (req, res) => {
   const { userId } = req.params;
   const userExists = await userModel.findById(userId);
+
   if (!userExists) {
     return res.status(404).send({
       statusCode: 404,
       message: "Questo utente non esiste",
     });
   }
+
   try {
-    const userToUpdate = req.body;
+    const { userName } = req.body;
+    const userToUpdate = { userName };
     const optionUser = { new: true };
     const result = await userModel.findByIdAndUpdate(
       userId,
       userToUpdate,
       optionUser
     );
+
     res.status(200).send({
       statusCode: 200,
       message: "Utente modificato con successo",

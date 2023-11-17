@@ -1,9 +1,11 @@
 const logger = (req, res, next) => {
-    const { url, ip, method } = req
+  const { url, ip, method } = req;
 
-    console.log(`${new Date().toISOString()} Effettuata richiesta ${method} all'endpoint ${url} da ip ${ip}`)
+  console.log(
+    `${new Date().toISOString()} Effettuata richiesta ${method} all'endpoint ${url} da ip ${ip}`
+  );
 
-    next()
-}
+  next();
+};
 
-module.exports = logger
+module.exports = logger;

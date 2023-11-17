@@ -11,7 +11,7 @@ const DefaultNavbar = () => {
     const confirmLogout = window.confirm("Sei sicuro di voler uscire?");
     if (confirmLogout) {
       logout();
-      window.location.href = "http://localhost:3000/login"
+      window.location.href = "http://localhost:3000/login";
     }
   };
 

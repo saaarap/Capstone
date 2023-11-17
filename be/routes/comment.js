@@ -21,7 +21,9 @@ comment.get("/comment", async (req, res) => {
 comment.get("/comment/:postId", async (req, res) => {
   const postId = req.params.postId;
   try {
-    const comments = await commentModel.find({ postId: postId });
+    const comments = await commentModel
+      .find({ postId: postId })
+      .populate("authorId", "userName avatar");
 
     res.status(200).send({
       statusCode: 200,
@@ -36,11 +38,13 @@ comment.get("/comment/:postId", async (req, res) => {
 });
 
 comment.post("/comment/create/:postId", async (req, res) => {
-const { comments } = req.body;
+  const { comments } = req.body;
   const postId = req.params.postId;
+  const authorId = req.body.authorId;
   const newComment = new commentModel({
     comments: comments,
-postId: postId,
+    postId: postId,
+    authorId: authorId,
   });
 
   try {

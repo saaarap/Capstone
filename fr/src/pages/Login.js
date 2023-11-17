@@ -23,13 +23,9 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      // Chiamare direttamente la funzione login con await
       const userInfo = await login();
-  
-      console.log("User information:", userInfo);
-  
       const response = await fetch(`http://localhost:4040/login`, {
         method: "POST",
         headers: {
@@ -37,9 +33,9 @@ const Login = () => {
         },
         body: JSON.stringify(loginData),
       });
-  
+
       const data = await response.json();
-  
+
       if (data.token) {
         localStorage.setItem("loggedInUser", JSON.stringify(data.token));
         navigate("/home");
@@ -50,7 +46,7 @@ const Login = () => {
       console.error("Errore durante il login:", error);
     }
   };
-  
+
   const redirectForLoginWithGithub = () => {
     window.location.href = `http://localhost:4040/auth/github`;
   };

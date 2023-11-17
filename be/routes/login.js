@@ -16,7 +16,10 @@ login.post("/login", async (req, res) => {
       });
     }
 
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
 
     if (!validPassword) {
       return res.status(400).json({
@@ -25,13 +28,12 @@ login.post("/login", async (req, res) => {
       });
     }
 
-    // Generazione del token
     const token = jwt.sign(
       {
         id: user._id,
         userName: user.userName,
         email: user.email,
-        avatar:user.avatar
+        avatar: user.avatar,
       },
       process.env.JWT_SECRET,
       {
@@ -39,7 +41,6 @@ login.post("/login", async (req, res) => {
       }
     );
 
-    // Restituisci il token come parte del corpo della risposta
     return res.status(200).json({
       statusCode: 200,
       message: "Login effettuato con successo",

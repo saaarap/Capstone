@@ -1,74 +1,74 @@
 const express = require("express");
 const PostModel = require("../models/postmodel");
-//const logger = require("../middlewares/logger");
 const validatePost = require("../middlewares/validatePost");
 const posts = express.Router();
 const multer = require("multer");
 const crypto = require("crypto");
-const {CloudinaryStorage} = require("multer-storage-cloudinary");
-const cloudinary = require("cloudinary").v2
-require('dotenv').config()
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-})
-
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const cloudStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-      folder: 'pippo13',
-      format: async (req, file) => 'png',
-      public_id: (req, file) => file.name
-  }
-})
+    folder: "pippo13",
+    format: async (req, file) => "png",
+    public_id: (req, file) => file.name,
+  },
+});
 
 const internalStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-      // posizione in cui salvare i file
-      cb(null, './public')
+    // posizione in cui salvare i file
+    cb(null, "./public");
   },
   filename: (req, file, cb) => {
-      const uniqueSuffix = `${Date.now()}-${crypto.randomUUID()}`
-      const fileExtension = file.originalname.split('.').pop()
-      cb(null, `${file.fieldname}-${uniqueSuffix}.${fileExtension}`)
-  }
-})
+    const uniqueSuffix = `${Date.now()}-${crypto.randomUUID()}`;
+    const fileExtension = file.originalname.split(".").pop();
+    cb(null, `${file.fieldname}-${uniqueSuffix}.${fileExtension}`);
+  },
+});
 
-const upload = multer({ storage: internalStorage })
-const cloudUpload = multer({ storage: cloudStorage })
+const upload = multer({ storage: internalStorage });
+const cloudUpload = multer({ storage: cloudStorage });
 
-
-posts.post('/posts/cloudUpload', cloudUpload.single('cover'), async (req, res) => {
-  try {
-    console.log("ciaoo")
-      res.status(200).json({ cover: req.file.path })
-  } catch (e) {
+posts.post(
+  "/posts/cloudUpload",
+  cloudUpload.single("cover"),
+  async (req, res) => {
+    try {
+      console.log("ciaoo");
+      res.status(200).json({ cover: req.file.path });
+    } catch (e) {
       res.status(500).send({
-          statusCode: 500,
-          message: "Errore interno del server"
-      })
+        statusCode: 500,
+        message: "Errore interno del server",
+      });
+    }
   }
-})
+);
 
-posts.post('/posts/upload', upload.single('cover')  , async (req, res) => {
-  const url = "http://localhost:4040" // http://localhost:5050
+posts.post("/posts/upload", upload.single("cover"), async (req, res) => {
+  const url = "http://localhost:4040";
 
-  console.log(req.file)
+  console.log(req.file);
 
   try {
-      const imgUrl = req.file.filename;
-      res.status(200).json({ cover: `${url}/public/${imgUrl}` })
+    const imgUrl = req.file.filename;
+    res.status(200).json({ cover: `${url}/public/${imgUrl}` });
   } catch (e) {
-      res.status(500).send({
-          statusCode: 500,
-          message: "Errore interno del server"
-      })
+    res.status(500).send({
+      statusCode: 500,
+      message: "Errore interno del server",
+    });
   }
-  
-})
+});
 
 posts.get("/posts", async (req, res) => {
   const { page = 1, pageSize = 6, sortBy = "createdAt:desc" } = req.query;
@@ -101,30 +101,26 @@ posts.get("/posts", async (req, res) => {
   }
 });
 
-
 posts.post("/posts/create", validatePost, async (req, res) => {
   const newPost = new PostModel({
     title: req.body.title,
     cover: req.body.cover,
     author: req.body.author,
-    //id nella semplice stringa ""
     content: req.body.content,
-    
-  })
+  });
   try {
-    const post = await newPost.save()
+    const post = await newPost.save();
 
     res.status(201).send({
       statusCode: 201,
       message: "Post save succesfully",
-      payload: post
-    })
-    //scrive direttamente nel database
+      payload: post,
+    });
   } catch (error) {
     res.status(500).send({
       statusCode: 500,
       message: "Errore interno del server",
-      error
+      error,
     });
   }
 });
@@ -141,7 +137,7 @@ posts.patch("/posts/update/:postId", async (req, res) => {
   }
 
   try {
-    const dataToUpdate = req.body; 
+    const dataToUpdate = req.body;
 
     const options = { new: true };
     const updatedPost = await PostModel.findByIdAndUpdate(
@@ -171,10 +167,8 @@ posts.patch("/posts/update/:postId", async (req, res) => {
   }
 });
 
-
 posts.delete("/posts/delete/:postId", async (req, res) => {
-  const { postId } = req.params; 
-
+  const { postId } = req.params;
 
   try {
     const post = await PostModel.findByIdAndDelete(postId);
